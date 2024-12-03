@@ -1,25 +1,38 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { fetchMultiplePoketmonById } from "./thunk";
+import { fetchMultiplePokemonById } from "./thunk";
 
-export const poketmonSlice = createSlice({
-  name: "poketmon",
+export const pokemonSlice = createSlice({
+  name: "pokemon",
   initialState: {
     data: [],
     loading: true,
   },
-  reducers: {}, // 동기적 상태 변경
+  reducers: {},
   extraReducers: (builder) => {
-    //비동기적 상태 변경
     builder
-      .addCase(fetchMultiplePoketmonById.pending, (state) => {
+      .addCase(fetchMultiplePokemonById.pending, (state) => {
         state.loading = true;
       })
-      .addCase(fetchMultiplePoketmonById.rejected, (state) => {
+      .addCase(fetchMultiplePokemonById.rejected, (state) => {
         state.loading = false;
       })
-      .addCase(fetchMultiplePoketmonById.fulfilled, (state, action) => {
+      .addCase(fetchMultiplePokemonById.fulfilled, (state, action) => {
         state.loading = false;
         state.data = action.payload;
       });
   },
-}); // =>action, reducer만들어짐 reducer가 만들어졌다는 건 store를 만들 수 있다는 것
+});
+
+export const favoriteSlice = createSlice({
+  name: "favorite",
+  initialState: [1, 2, 3],
+  reducers: {
+    addToFavorite(state, action) {
+      state.push(action.payload.pokemonId);
+    },
+    removeFromFavorite(state, action) {
+      const index = state.indexOf(action.payload.pokemonId);
+      if (index !== -1) state.splice(index, 1);
+    },
+  },
+});
