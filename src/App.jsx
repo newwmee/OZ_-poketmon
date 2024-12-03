@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import "./App.css";
+import "./App.scss";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchMultiplePoketmonById } from "./RTK/thunk";
 
@@ -11,7 +11,11 @@ function App() {
   useEffect(() => {
     ditpatch(fetchMultiplePoketmonById(151));
   }, []);
-  return <></>;
+  return (
+    <>
+      <h1 className="text-[40px]">포켓몬 도감</h1>
+    </>
+  );
 }
 
 export default App;
